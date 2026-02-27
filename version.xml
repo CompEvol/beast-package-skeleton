@@ -1,0 +1,6 @@
+<package name="MyPackage" version="1.0.0">
+    <service type="beast.base.core.BEASTInterface">
+        <provider classname="my.beast.pkg.MyDistribution"/>
+        <provider classname="my.beast.pkg.MyScaleOperator"/>
+    </service>
+</package>

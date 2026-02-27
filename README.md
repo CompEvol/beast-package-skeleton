@@ -1,2 +1,88 @@
-# beast-package-skeleton
-A skeleton beast3 package
+# BEAST 3 Package Skeleton
+
+A minimal, ready-to-build template for creating a BEAST 3 external package
+using the strongly-typed `spec` class hierarchy.
+
+This skeleton demonstrates:
+- A custom scalar distribution (`MyDistribution`) extending `ScalarDistribution` — usable directly as a prior (no `Prior` wrapper)
+- A custom MCMC operator (`MyScaleOperator`) working with `RealScalarParam`
+- JPMS `module-info.java` with `provides` declarations
+- `version.xml` for package service discovery
+- JUnit 5 testing with the new strongly-typed API
+- A BEAST XML file using both custom classes with `RealScalarParam` and domain constraints
+
+## Prerequisites
+
+- Java 25+
+- Maven 3.9+
+- BEAST 3 installed to your local Maven repository:
+
+```bash
+cd /path/to/beast3modular
+mvn install -DskipTests
+```
+
+## Build and test
+
+```bash
+mvn compile   # compile against beast-base
+mvn test      # run MyDistributionTest
+```
+
+## How to customise this skeleton
+
+1. **Rename the Maven coordinates** in `pom.xml`:
+   - Change `groupId`, `artifactId`, and `version`
+
+2. **Rename the Java module** in `src/main/java/module-info.java`:
+   - Change `module my.beast.pkg` to your module name
+   - Update `exports` and `provides` declarations
+
+3. **Rename the Java package** under `src/main/java/`:
+   - Move source files to your package directory
+   - Update `package` statements in all `.java` files
+
+4. **Update `version.xml`**:
+   - Change the package `name` and `version`
+   - List your `BEASTInterface` providers
+
+5. **Replace the example classes** with your own:
+   - See `MyDistribution.java` for the `ScalarDistribution` pattern
+   - See `MyScaleOperator.java` for the `Operator` + `RealScalarParam` pattern
+
+## Key concepts (new spec API)
+
+| Old (deprecated)                    | New (spec)                           |
+|-------------------------------------|--------------------------------------|
+| `RealParameter`                     | `RealScalarParam<D>` / `RealVectorParam<D>` |
+| `ParametricDistribution`            | `ScalarDistribution<S, T>`           |
+| `Prior` wrapper + `ParametricDistribution` | Distribution with `param` input (acts as its own prior) |
+| `lower`/`upper` bounds              | Domain types: `Real`, `PositiveReal`, `NonNegativeReal`, `UnitInterval` |
+
+## Adding beast-fx for GUI packages
+
+If your package includes BEAUti input editors or other GUI components,
+add this dependency to `pom.xml`:
+
+```xml
+<dependency>
+    <groupId>beast</groupId>
+    <artifactId>beast-fx</artifactId>
+    <version>${beast.version}</version>
+</dependency>
+```
+
+And add `requires beast.fx;` to your `module-info.java`.
+
+## Deploying as a BEAST package
+
+To deploy your package for others to install via the BEAST Package Manager:
+
+1. Run `mvn package` to create the JAR in `target/`
+2. Ensure `version.xml` lists all your `BEASTInterface` providers
+3. Follow the [BEAST package publishing guide](https://www.beast2.org/managing-packages/)
+
+## Further reading
+
+- [BEAST 3 source (beast3modular)](https://github.com/CompEvol/beast3modular)
+- [BEAST 3 developer documentation](https://www.beast2.org/developing-beast-3-packages/)
