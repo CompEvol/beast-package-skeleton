@@ -1,4 +1,4 @@
-<beast version="2.7" namespace="beast.base.inference:beast.base.spec.inference.parameter:beast.base.spec.inference.distribution:beast.base.inference.operator:my.beast.pkg">
+<beast version="2.0" namespace="beast.base.inference:beast.base.spec.inference.parameter:beast.base.spec.inference.distribution:beast.base.inference.operator:my.beast.pkg">
 
     <!-- A real-valued parameter to estimate (PositiveReal domain = must be > 0) -->
     <parameter id="myParam" spec="RealScalarParam" value="1.0" domain="PositiveReal"/>

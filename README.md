@@ -98,9 +98,9 @@ To deploy your package for others to install via the BEAST Package Manager:
 
 1. Run `mvn package` to create the JAR in `target/`
 2. Ensure `version.xml` lists all your `BEASTInterface` providers
-3. Follow the [BEAST package publishing guide](https://www.beast2.org/managing-packages/)
+3. Distribute the JAR and `version.xml` to users (publishing workflow TBD for BEAST 3)
 
 ## Further reading
 
 - [BEAST 3 source (beast3modular)](https://github.com/CompEvol/beast3modular)
-- [BEAST 3 developer documentation](https://www.beast2.org/developing-beast-3-packages/)
+- [BEAST 2 → 3 migration guide](https://github.com/CompEvol/beast3modular/blob/master/scripts/migration-guide.md)
