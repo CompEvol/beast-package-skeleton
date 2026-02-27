@@ -17,6 +17,13 @@
         <beast.version>2.8.0-SNAPSHOT</beast.version>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>github-beast3</id>
+            <url>https://maven.pkg.github.com/CompEvol/beast3</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <!-- BEAST 3 core -->
         <dependency>

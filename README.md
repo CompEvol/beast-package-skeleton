@@ -15,10 +15,28 @@ This skeleton demonstrates:
 
 - Java 25+
 - Maven 3.9+
-- BEAST 3 installed to your local Maven repository:
+- **GitHub Packages authentication** for BEAST 3 artifacts — add this to your `~/.m2/settings.xml`:
+
+```xml
+<settings>
+  <servers>
+    <server>
+      <id>github-beast3</id>
+      <username>YOUR_GITHUB_USERNAME</username>
+      <password>YOUR_GITHUB_PAT</password>
+    </server>
+  </servers>
+</settings>
+```
+
+Replace `YOUR_GITHUB_USERNAME` with your GitHub username and `YOUR_GITHUB_PAT` with a [personal access token](https://github.com/settings/tokens) that has the `read:packages` scope. BEAST 3 dependencies are resolved automatically from GitHub Packages.
+
+Alternatively, you can install BEAST 3 to your local Maven repository from source:
 
 ```bash
 cd /path/to/beast3modular
+mvn install:install-file -Dfile=lib/beagle.jar -DgroupId=beast -DartifactId=beagle -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile=lib/colt.jar -DgroupId=beast -DartifactId=colt -Dversion=1.0 -Dpackaging=jar
 mvn install -DskipTests
 ```
 
