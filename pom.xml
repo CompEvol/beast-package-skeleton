@@ -20,7 +20,7 @@
     <repositories>
         <repository>
             <id>github-beast3</id>
-            <url>https://maven.pkg.github.com/CompEvol/beast3</url>
+            <url>https://maven.pkg.github.com/alexeid/beast3modular</url>
         </repository>
     </repositories>
 
