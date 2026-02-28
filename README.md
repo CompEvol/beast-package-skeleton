@@ -21,7 +21,7 @@ This skeleton demonstrates:
 <settings>
   <servers>
     <server>
-      <id>github-beast3</id>
+      <id>github</id>
       <username>YOUR_GITHUB_USERNAME</username>
       <password>YOUR_GITHUB_PAT</password>
     </server>
@@ -102,5 +102,6 @@ To deploy your package for others to install via the BEAST Package Manager:
 
 ## Further reading
 
-- [BEAST 3 source (beast3modular)](https://github.com/CompEvol/beast3modular)
-- [BEAST 2 → 3 migration guide](https://github.com/CompEvol/beast3modular/blob/master/scripts/migration-guide.md)
+- [BEAST 3 source (beast3modular)](https://github.com/alexeid/beast3modular)
+- [BEAST 2 → 3 migration guide](https://github.com/alexeid/beast3modular/blob/master/scripts/migration-guide.md)
+- [morph-models](https://github.com/alexeid/morph-models) — worked example of a migrated multi-module BEAST 3 package

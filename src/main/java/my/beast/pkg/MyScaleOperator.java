@@ -38,7 +38,7 @@ public class MyScaleOperator extends Operator {
     public double proposal() {
         final RealScalarParam<?> param = parameterInput.get();
 
-        // Draw scale uniformly from [1/scaleFactor, scaleFactor] on log scale
+        // Draw scale uniformly from [scaleFactor, 1/scaleFactor]
         final double scale = scaleFactor + (Randomizer.nextDouble() * ((1.0 / scaleFactor) - scaleFactor));
 
         final double oldValue = param.get();
