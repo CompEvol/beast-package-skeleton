@@ -102,6 +102,6 @@ To deploy your package for others to install via the BEAST Package Manager:
 
 ## Further reading
 
-- [BEAST 3 source (beast3modular)](https://github.com/alexeid/beast3modular)
-- [BEAST 2 → 3 migration guide](https://github.com/alexeid/beast3modular/blob/master/scripts/migration-guide.md)
+- [BEAST 3 source](https://github.com/CompEvol/beast3)
+- [BEAST 2 → 3 migration guide](https://github.com/CompEvol/beast3/blob/master/scripts/migration-guide.md)
 - [morph-models](https://github.com/alexeid/morph-models) — worked example of a migrated multi-module BEAST 3 package
