@@ -92,13 +92,67 @@ add this dependency to `pom.xml`:
 
 And add `requires beast.fx;` to your `module-info.java`.
 
-## Deploying as a BEAST package
+## Releasing your package
 
-To deploy your package for others to install via the BEAST Package Manager:
+The included `release.sh` script automates the full release process: build, package, and
+optionally create a GitHub release.
 
-1. Run `mvn package` to create the JAR in `target/`
-2. Ensure `version.xml` lists all your `BEASTInterface` providers
-3. Distribute the JAR and `version.xml` to users (publishing workflow TBD for BEAST 3)
+### 1. Build the package ZIP
+
+```bash
+./release.sh
+```
+
+This will:
+- Read the package name and version from `version.xml`
+- Run `mvn clean package -DskipTests`
+- Assemble a BEAST package ZIP with the correct flat structure
+- Output a file like `MyPackage.v1.0.0.zip`
+
+### 2. Create a GitHub release
+
+```bash
+./release.sh --release
+```
+
+This additionally creates a GitHub release (e.g. `v1.0.0`) with the ZIP attached,
+and prints the CBAN XML entry you'll need for the next step.
+
+### 3. Submit to CBAN
+
+The [CBAN repository](https://github.com/CompEvol/CBAN) is where BEAST's Package
+Manager discovers available packages. To make your package installable:
+
+1. Fork [CompEvol/CBAN](https://github.com/CompEvol/CBAN)
+2. Add your package entry to `packages2.8.xml` (the `--release` flag prints this for you):
+
+```xml
+<package name="MyPackage" version="1.0.0"
+    url="https://github.com/YOU/YOUR-REPO/releases/download/v1.0.0/MyPackage.v1.0.0.zip"
+    projectURL="https://github.com/YOU/YOUR-REPO"
+    description="One-line description of your package">
+    <depends on="BEAST.base" atleast="2.8.0"/>
+</package>
+```
+
+3. Open a pull request against CompEvol/CBAN
+
+Once merged, your package will appear in the BEAST Package Manager.
+
+### ZIP structure
+
+The BEAST Package Manager expects a flat ZIP (no wrapper directory) containing:
+
+```
+version.xml            # required — package name, version, service providers
+lib/                   # required — your JARs (and any third-party runtime deps)
+fxtemplates/           # optional — BEAUti templates
+examples/              # optional — example BEAST XML files and data
+```
+
+**Important:** the ZIP must NOT contain a top-level directory named after your package.
+The Package Manager extracts the ZIP into its own directory, so a wrapper would
+cause double-nesting and break service discovery.
 
 ## Further reading
 
