@@ -50,7 +50,8 @@ mvn test      # run MyDistributionTest
 ## How to customise this skeleton
 
 1. **Rename the Maven coordinates** in `pom.xml`:
-   - Change `groupId`, `artifactId`, and `version`
+   - Change `groupId` (should be a verified Maven Central namespace, e.g. `io.github.yourname`), `artifactId`, and `version`
+   - Update `<url>`, `<developers>`, and `<scm>` to point to your repository
 
 2. **Rename the Java module** in `src/main/java/module-info.java`:
    - Change `module my.beast.pkg` to your module name
@@ -138,6 +139,59 @@ Manager discovers available packages. To make your package installable:
 3. Open a pull request against CompEvol/CBAN
 
 Once merged, your package will appear in the BEAST Package Manager.
+
+## Publishing to Maven Central
+
+BEAST 3 can also install packages directly from Maven Central. This is an
+alternative (or complement) to the ZIP/CBAN distribution above.
+
+### Prerequisites
+
+1. **Sonatype account** — register at [central.sonatype.com](https://central.sonatype.com/)
+2. **Verified namespace** — verify your `groupId` namespace (e.g. `io.github.yourname`)
+3. **GPG key** — generate a signing key and publish it to a key server
+4. **Maven settings** — add credentials to `~/.m2/settings.xml`:
+
+```xml
+<settings>
+  <servers>
+    <server>
+      <id>central</id>
+      <username>YOUR_SONATYPE_TOKEN_USER</username>
+      <password>YOUR_SONATYPE_TOKEN_PASS</password>
+    </server>
+  </servers>
+</settings>
+```
+
+### Customisation
+
+1. Set your `groupId` to your verified namespace (e.g. `io.github.yourname`)
+2. Fill in the `<url>`, `<licenses>`, `<developers>`, and `<scm>` sections in `pom.xml`
+3. Remove the `-SNAPSHOT` suffix from `<version>` for release builds
+
+### Deploy
+
+```bash
+mvn clean deploy -Prelease
+```
+
+This builds the JAR (with `version.xml` embedded), generates sources and javadoc
+JARs, signs everything with GPG, and uploads to Maven Central.
+
+### User install
+
+Once published, BEAST 3 users can install your package with:
+
+```
+Package Manager > Install from Maven > groupId:artifactId:version
+```
+
+Or from the command line:
+
+```bash
+beast -package_manager -maven groupId:artifactId:version
+```
 
 ### ZIP structure
 

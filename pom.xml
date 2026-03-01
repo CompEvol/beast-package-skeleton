@@ -11,6 +11,28 @@
     <name>My BEAST Package</name>
     <description>Skeleton BEAST 3 external package</description>
 
+    <url>https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPO</url>
+
+    <licenses>
+        <license>
+            <name>GNU Lesser General Public License v3.0</name>
+            <url>https://www.gnu.org/licenses/lgpl-3.0.html</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>YOUR_NAME</name>
+            <url>https://github.com/YOUR_GITHUB_USERNAME</url>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/YOUR_GITHUB_USERNAME/YOUR_REPO.git</connection>
+        <developerConnection>scm:git:ssh://github.com:YOUR_GITHUB_USERNAME/YOUR_REPO.git</developerConnection>
+        <url>https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPO</url>
+    </scm>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>25</maven.compiler.release>
@@ -29,13 +51,13 @@
     <dependencies>
         <!-- BEAST 3 core (provided by the BEAST runtime environment) -->
         <dependency>
-            <groupId>beast</groupId>
+            <groupId>io.github.alexeid</groupId>
             <artifactId>beast-pkgmgmt</artifactId>
             <version>${beast.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>beast</groupId>
+            <groupId>io.github.alexeid</groupId>
             <artifactId>beast-base</artifactId>
             <version>${beast.version}</version>
             <scope>provided</scope>
@@ -115,6 +137,22 @@
                             </resources>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>embed-version-xml-in-jar</id>
+                        <phase>generate-resources</phase>
+                        <goals><goal>copy-resources</goal></goals>
+                        <configuration>
+                            <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}</directory>
+                                    <includes>
+                                        <include>version.xml</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
 
@@ -140,4 +178,60 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>3.3.1</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals><goal>jar-no-fork</goal></goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>3.11.2</version>
+                        <configuration>
+                            <doclint>none</doclint>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals><goal>jar</goal></goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>3.2.7</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals><goal>sign</goal></goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.sonatype.central</groupId>
+                        <artifactId>central-publishing-maven-plugin</artifactId>
+                        <version>0.6.0</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <publishingServerId>central</publishingServerId>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
