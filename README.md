@@ -34,9 +34,9 @@ Replace `YOUR_GITHUB_USERNAME` with your GitHub username and `YOUR_GITHUB_PAT` w
 Alternatively, you can install BEAST 3 to your local Maven repository from source:
 
 ```bash
-cd /path/to/beast3modular
-mvn install:install-file -Dfile=lib/beagle.jar -DgroupId=beast -DartifactId=beagle -Dversion=1.0 -Dpackaging=jar
-mvn install:install-file -Dfile=lib/colt.jar -DgroupId=beast -DartifactId=colt -Dversion=1.0 -Dpackaging=jar
+cd /path/to/beast3
+mvn install:install-file -Dfile=lib/beagle.jar -DgroupId=io.github.compevol -DartifactId=beagle -Dversion=1.0 -Dpackaging=jar
+mvn install:install-file -Dfile=lib/colt.jar -DgroupId=io.github.compevol -DartifactId=colt -Dversion=1.0 -Dpackaging=jar
 mvn install -DskipTests
 ```
 
@@ -85,7 +85,7 @@ add this dependency to `pom.xml`:
 
 ```xml
 <dependency>
-    <groupId>beast</groupId>
+    <groupId>io.github.compevol</groupId>
     <artifactId>beast-fx</artifactId>
     <version>${beast.version}</version>
 </dependency>
@@ -212,4 +212,4 @@ cause double-nesting and break service discovery.
 
 - [BEAST 3 source](https://github.com/CompEvol/beast3)
 - [BEAST 2 → 3 migration guide](https://github.com/CompEvol/beast3/blob/master/scripts/migration-guide.md)
-- [morph-models](https://github.com/alexeid/morph-models) — worked example of a migrated multi-module BEAST 3 package
+- [morph-models](https://github.com/CompEvol/morph-models) — worked example of a migrated multi-module BEAST 3 package
