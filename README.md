@@ -15,7 +15,7 @@ This skeleton demonstrates:
 
 - Java 25+
 - Maven 3.9+
-- **GitHub Packages authentication** for BEAST 3 artifacts — add this to your `~/.m2/settings.xml`:
+- **GitHub Packages authentication** for BEAST 3 artifacts (not needed if BEAST 3 is available on Maven Central) — add this to your `~/.m2/settings.xml`:
 
 ```xml
 <settings>
@@ -29,7 +29,7 @@ This skeleton demonstrates:
 </settings>
 ```
 
-Replace `YOUR_GITHUB_USERNAME` with your GitHub username and `YOUR_GITHUB_PAT` with a [personal access token](https://github.com/settings/tokens) that has the `read:packages` scope. BEAST 3 dependencies are resolved automatically from GitHub Packages.
+Replace `YOUR_GITHUB_USERNAME` with your GitHub username and `YOUR_GITHUB_PAT` with a [personal access token](https://github.com/settings/tokens) that has the `read:packages` scope. BEAST 3 dependencies are resolved automatically from [GitHub Packages](https://github.com/CompEvol/beast3/packages).
 
 Alternatively, you can install BEAST 3 to your local Maven repository from source:
 
