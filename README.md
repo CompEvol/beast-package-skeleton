@@ -190,7 +190,7 @@ Package Manager > Install from Maven > groupId:artifactId:version
 Or from the command line:
 
 ```bash
-beast -package_manager -maven groupId:artifactId:version
+packagemanager -maven groupId:artifactId:version
 ```
 
 ### ZIP structure
