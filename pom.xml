@@ -49,25 +49,16 @@
     </repositories>
 
     <dependencies>
-        <!-- BEAST 3 core (provided by the BEAST runtime environment) -->
+        <!-- BEAST 3 core -->
         <dependency>
             <groupId>io.github.compevol</groupId>
             <artifactId>beast-pkgmgmt</artifactId>
             <version>${beast.version}</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>io.github.compevol</groupId>
             <artifactId>beast-base</artifactId>
             <version>${beast.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- Commons Statistics (for custom ParametricDistribution implementations) -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-statistics-distribution</artifactId>
-            <version>1.2</version>
         </dependency>
 
         <!-- Testing -->

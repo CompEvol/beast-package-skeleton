@@ -15,12 +15,17 @@
         </file>
     </files>
 
-    <!-- Project JAR + runtime deps (BEAST core is provided scope, so excluded) -->
+    <!-- Project JAR + its own runtime deps (exclude BEAST core and its transitive deps) -->
     <dependencySets>
         <dependencySet>
             <outputDirectory>/lib</outputDirectory>
             <useProjectArtifact>true</useProjectArtifact>
             <scope>runtime</scope>
+            <excludes>
+                <exclude>io.github.compevol:beast-base</exclude>
+                <exclude>io.github.compevol:beast-pkgmgmt</exclude>
+            </excludes>
+            <useTransitiveFiltering>true</useTransitiveFiltering>
         </dependencySet>
     </dependencySets>
 
