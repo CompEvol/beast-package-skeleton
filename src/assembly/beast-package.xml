@@ -35,9 +35,9 @@
             <directory>${project.basedir}/src/test/resources/examples</directory>
             <outputDirectory>/examples</outputDirectory>
         </fileSet>
-        <!-- fxtemplates/ (if present) -->
+        <!-- fxtemplates/ (if present; use JPMS module-namespaced resource path) -->
         <fileSet>
-            <directory>${project.basedir}/src/main/resources/fxtemplates</directory>
+            <directory>${project.basedir}/src/main/resources/my.beast.pkg/fxtemplates</directory>
             <outputDirectory>/fxtemplates</outputDirectory>
         </fileSet>
     </fileSets>
