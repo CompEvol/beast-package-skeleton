@@ -78,10 +78,17 @@ mvn test      # run MyDistributionTest
 | `Prior` wrapper + `ParametricDistribution` | Distribution with `param` input (acts as its own prior) |
 | `lower`/`upper` bounds              | Domain types: `Real`, `PositiveReal`, `NonNegativeReal`, `UnitInterval` |
 
-## Adding beast-fx for GUI packages
+## Adding GUI (BEAUti) support
 
-If your package includes BEAUti input editors or other GUI components,
-add this dependency to `pom.xml`:
+If your package includes BEAUti input editors, alignment providers, or other
+GUI components, you have two options for how to organise them.
+
+### Option A: single module (recommended for most packages)
+
+Keep everything in one Maven artifact and one JPMS module. Use `requires static`
+so the module loads without JavaFX on the module path (headless/cluster runs):
+
+Add the dependency to `pom.xml`:
 
 ```xml
 <dependency>
@@ -91,7 +98,59 @@ add this dependency to `pom.xml`:
 </dependency>
 ```
 
-And add `requires beast.fx;` to your `module-info.java`.
+In `module-info.java`, declare the GUI dependencies as **static** (compile-time only):
+
+```java
+open module my.beast.example {
+    requires beast.pkgmgmt;
+    requires beast.base;
+    requires static beast.fx;         // optional at runtime
+    requires static javafx.controls;  // optional at runtime
+
+    exports my.beast.example;
+    exports my.beast.example.app.beauti;  // GUI classes
+
+    provides beast.base.core.BEASTInterface with
+        my.beast.example.MyDistribution,
+        my.beast.example.MyScaleOperator,
+        my.beast.example.app.beauti.MyAlignmentProvider;
+}
+```
+
+**Convention:** place GUI classes in a `*.app.beauti` subpackage to keep them
+separate from core logic.
+
+When running headless (no beast-fx on the module path), the module loads normally.
+BEAUti provider classes are registered by name but never instantiated, so the
+missing GUI dependencies cause no errors. When running with BEAUti, everything
+works as expected.
+
+### Option B: two modules (core + fx)
+
+Split into a parent POM with two submodules: one for core logic and one for GUI.
+This is the pattern used by beast3 itself (`beast-base` + `beast-fx`) and by
+[morph-models](https://github.com/CompEvol/morph-models).
+
+Use this when your package has substantial GUI code (multiple custom input
+editors, complex BEAUti panels) that warrants its own module.
+
+```
+my-package/
+    pom.xml                    (parent, packaging: pom)
+    beast-my-package/          (core module)
+        pom.xml
+        src/main/java/module-info.java
+    beast-my-package-fx/       (GUI module, depends on core)
+        pom.xml
+        src/main/java/module-info.java
+```
+
+The core module has no JavaFX dependency at all. The fx module declares
+`requires beast.fx;` and `requires javafx.controls;` as regular (non-static)
+dependencies.
+
+**Trade-off:** cleaner separation, but doubles the number of Eclipse/IDE projects.
+For most packages where the GUI code is one or two classes, Option A is simpler.
 
 ## Releasing your package
 
@@ -212,4 +271,4 @@ cause double-nesting and break service discovery.
 
 - [BEAST 3 source](https://github.com/CompEvol/beast3)
 - [BEAST 2 → 3 migration guide](https://github.com/CompEvol/beast3/blob/master/scripts/migration-guide.md)
-- [morph-models](https://github.com/CompEvol/morph-models) — worked example of a migrated multi-module BEAST 3 package
+- [morph-models](https://github.com/CompEvol/morph-models) — worked example of a two-module (core + fx) BEAST 3 package (Option B)
