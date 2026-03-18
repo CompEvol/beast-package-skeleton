@@ -54,7 +54,7 @@ mvn test      # run MyDistributionTest
    - Update `<url>`, `<developers>`, and `<scm>` to point to your repository
 
 2. **Rename the Java module** in `src/main/java/module-info.java`:
-   - Change `module my.beast.pkg` to your module name
+   - Change `module my.beast.example` to your module name
    - Update `exports` and `provides` declarations
 
 3. **Rename the Java package** under `src/main/java/`:

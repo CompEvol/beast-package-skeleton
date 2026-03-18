@@ -1,4 +1,4 @@
-package my.beast.pkg;
+package my.beast.example;
 
 import beast.base.spec.domain.PositiveReal;
 import beast.base.spec.domain.Real;

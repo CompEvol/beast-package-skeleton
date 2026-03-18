@@ -1,4 +1,4 @@
-package my.beast.pkg;
+package my.beast.example;
 
 import beast.base.core.Description;
 import beast.base.core.Input;

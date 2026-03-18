@@ -1,11 +1,11 @@
-open module my.beast.pkg {
+open module my.beast.example {
     requires beast.pkgmgmt;
     requires beast.base;
     requires org.apache.commons.statistics.distribution;
 
-    exports my.beast.pkg;
+    exports my.beast.example;
 
     provides beast.base.core.BEASTInterface with
-        my.beast.pkg.MyDistribution,
-        my.beast.pkg.MyScaleOperator;
+        my.beast.example.MyDistribution,
+        my.beast.example.MyScaleOperator;
 }
