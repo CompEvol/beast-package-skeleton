@@ -68,6 +68,12 @@ mvn test      # run MyDistributionTest
    - See `MyDistribution.java` for the `ScalarDistribution` pattern
    - See `MyScaleOperator.java` for the `Operator` + `RealScalarParam` pattern
 
+6. **Update `src/assembly/beast-package.xml`**:
+   - This file controls what goes into the BEAST package ZIP (built by `release.sh`)
+   - Update the `<includes>` to match your Maven `groupId:artifactId`
+   - Update the `<fileSets>` paths to match your module name (replace `my.beast.example` with your JPMS module name)
+   - Add `<include>` lines for any third-party runtime dependencies your package needs
+
 ## Key concepts (new spec API)
 
 | Old (deprecated)                    | New (spec)                           |
@@ -168,6 +174,16 @@ This will:
 - Assemble a BEAST package ZIP with the correct flat structure
 - Output a file like `MyPackage.v1.0.0.zip`
 
+**Linux/Ubuntu users:** if `./release.sh` fails with errors about `\r` characters, your
+git checkout may have converted line endings to CRLF. Fix with:
+
+```bash
+tr -d '\r' < release.sh > release_fixed.sh && mv release_fixed.sh release.sh
+chmod +x release.sh
+```
+
+Or run the script explicitly with bash: `bash release.sh`
+
 ### 2. Create a GitHub release
 
 ```bash
@@ -197,6 +213,31 @@ Manager discovers available packages. To make your package installable:
 3. Open a pull request against CompEvol/CBAN
 
 Once merged, your package will appear in the BEAST Package Manager.
+
+### 4. Local testing
+
+To test your package locally before releasing, install the built ZIP into BEAST's
+package directory:
+
+```bash
+# Build the ZIP
+./release.sh
+
+# Install to the local BEAST package directory
+PKG=MyPackage                          # your package name from version.xml
+BEAST_PKG_DIR=~/.beast/2.8/$PKG       # macOS and Linux
+# Windows: %USERPROFILE%\.beast\2.8\MyPackage
+
+mkdir -p "$BEAST_PKG_DIR"
+unzip -o "$PKG.v1.0.0.zip" -d "$BEAST_PKG_DIR"
+```
+
+After installation, BEAST/BEAUti will discover the package on next launch. You can
+verify with:
+
+```bash
+packagemanager -list
+```
 
 ## Publishing to Maven Central
 

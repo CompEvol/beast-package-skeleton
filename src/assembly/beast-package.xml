@@ -15,17 +15,16 @@
         </file>
     </files>
 
-    <!-- Project JAR + its own runtime deps (exclude BEAST core and its transitive deps) -->
+    <!-- Only include your own JARs (and any third-party runtime deps).
+         Add additional <include> lines for any non-BEAST runtime dependencies. -->
     <dependencySets>
         <dependencySet>
             <outputDirectory>/lib</outputDirectory>
             <useProjectArtifact>true</useProjectArtifact>
             <scope>runtime</scope>
-            <excludes>
-                <exclude>io.github.compevol:beast-base</exclude>
-                <exclude>io.github.compevol:beast-pkgmgmt</exclude>
-            </excludes>
-            <useTransitiveFiltering>true</useTransitiveFiltering>
+            <includes>
+                <include>my.beast.example:beast-my-package</include>
+            </includes>
         </dependencySet>
     </dependencySets>
 
