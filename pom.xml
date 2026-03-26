@@ -57,13 +57,6 @@
             <version>${beast.version}</version>
         </dependency>
 
-        <!-- BEAGLE (optional in beast-base, must be explicit for module path) -->
-        <dependency>
-            <groupId>io.github.compevol</groupId>
-            <artifactId>beagle</artifactId>
-            <version>1.0</version>
-        </dependency>
-
         <!-- Testing -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -201,6 +194,20 @@
     </build>
 
     <profiles>
+        <!-- BEAGLE: auto-activates when beagle JAR is installed locally (needed for exec:exec) -->
+        <profile>
+            <id>beagle</id>
+            <activation>
+                <file><exists>${user.home}/.m2/repository/io/github/compevol/beagle/1.0/beagle-1.0.jar</exists></file>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>io.github.compevol</groupId>
+                    <artifactId>beagle</artifactId>
+                    <version>1.0</version>
+                </dependency>
+            </dependencies>
+        </profile>
         <profile>
             <id>release</id>
             <build>
