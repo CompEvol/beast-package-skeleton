@@ -22,7 +22,6 @@ If you want to develop against an unreleased SNAPSHOT version of BEAST 3, you ca
 
 ```bash
 cd /path/to/beast3
-mvn install:install-file -Dfile=lib/beagle.jar -DgroupId=io.github.compevol -DartifactId=beagle -Dversion=1.0 -Dpackaging=jar
 mvn install -DskipTests
 ```
 
