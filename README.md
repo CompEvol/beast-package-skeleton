@@ -230,32 +230,17 @@ packagemanager -list
 BEAST 3 can also install packages directly from Maven Central. This is an
 alternative (or complement) to the ZIP/CBAN distribution above.
 
-### Prerequisites
+The recommended path is to publish automatically via GitHub Actions on a
+`v*` tag push. For a full step-by-step setup guide (Sonatype account,
+namespace verification, GPG key, repo secrets, the `ci-publish.yml`
+workflow, troubleshooting), see
+[**`package-release-setup.md`**](https://github.com/CompEvol/beast3/blob/master/scripts/package-release-setup.md)
+in the beast3 repo.
 
-1. **Sonatype account** — register at [central.sonatype.com](https://central.sonatype.com/)
-2. **Verified namespace** — verify your `groupId` namespace (e.g. `io.github.yourname`)
-3. **GPG key** — generate a signing key and publish it to a key server
-4. **Maven settings** — add credentials to `~/.m2/settings.xml`:
+### Quick local deploy (manual alternative)
 
-```xml
-<settings>
-  <servers>
-    <server>
-      <id>central</id>
-      <username>YOUR_SONATYPE_TOKEN_USER</username>
-      <password>YOUR_SONATYPE_TOKEN_PASS</password>
-    </server>
-  </servers>
-</settings>
-```
-
-### Customisation
-
-1. Set your `groupId` to your verified namespace (e.g. `io.github.yourname`)
-2. Fill in the `<url>`, `<licenses>`, `<developers>`, and `<scm>` sections in `pom.xml`
-3. Remove the `-SNAPSHOT` suffix from `<version>` for release builds
-
-### Deploy
+If you've already configured `~/.m2/settings.xml` with a `central` server
+entry and have GPG set up locally, you can deploy from your machine:
 
 ```bash
 mvn clean deploy -Prelease
